@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin category page{% endblock %}
+
+{% block body %}
+    <a href="{{ path('admin_category_create') }}">
+    <button>Create Category</button>
+    </a>
+    <ul>
+        {% for category in categorys %}
+            <div>
+        <li>{{ category.name }}</li>
+                <br>
+                <a href=""><button>Update</button></a>
+                <br>
+                <a href="{{ path('admin_category_delete', {id: category.id}) }}"><button>Delete</button></a>
+            </div>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
