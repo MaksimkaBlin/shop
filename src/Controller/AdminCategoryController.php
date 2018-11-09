@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdminController extends AbstractController
+class AdminCategoryController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin")
@@ -20,7 +20,7 @@ class AdminController extends AbstractController
     public function index()
     {
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'controller_name' => 'AdminCategoryController',
         ]);
     }
 
@@ -41,7 +41,7 @@ class AdminController extends AbstractController
     public function createCategory(Request $request, EntityManagerInterface $em)
     {
         $category = new Category();
-        $category ->setName('Write a Category');
+        $category ->setName('');
 
         //$form = $this->createForm(CreateCategoryForm::class, $category);
 
@@ -57,7 +57,7 @@ class AdminController extends AbstractController
 
             $em->persist($category);
             $em->flush();
-          return $this->redirectToRoute('homepage');
+          return $this->redirectToRoute('admin_category');
         }
 
 
@@ -66,6 +66,39 @@ class AdminController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/admin/category/update/{id}", name="admin_category_update")
+     */
+    public function updateCategory(Category $category, EntityManagerInterface $em, Request $request)
+    {
+
+       $category ->getName();
+
+        //$form = $this->createForm(CreateCategoryForm::class, $category);
+
+        $form  = $this->createFormBuilder($category)
+            ->add('name', TextType::class)
+            ->add('save', SubmitType::class, ['label'=>'Update Category'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $category = $form ->getData();
+
+            $em->persist($category);
+            $em->flush();
+            return $this->redirectToRoute('admin_category');
+        }
+
+
+        return $this->render('default.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+    }
+
 
     /**
      * @Route("/admin/category/delete/{id}", name="admin_category_delete")

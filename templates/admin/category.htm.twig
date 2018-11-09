@@ -9,11 +9,13 @@
     <ul>
         {% for category in categorys %}
             <div>
-        <li>{{ category.name }}</li>
+        <li>{{ category.name }}
                 <br>
-                <a href=""><button>Update</button></a>
+                <a href="{{ path('admin_category_update', {id: category.id}) }}"><button>Update</button></a>
                 <br>
                 <a href="{{ path('admin_category_delete', {id: category.id}) }}"><button>Delete</button></a>
+        </li>
+                <br>
             </div>
         {% endfor %}
     </ul>

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin product page{% endblock %}
+
+{% block body %}
+    <a href="{{ path('admin_product_create') }}">
+        <button>Create Product</button>
+    </a>
+    <br>
+    <ul>
+        {% for product in products %}
+            <div>
+                <li>{{ product.name }}
+                    <br>
+                    {{ product.category.name }}
+                    <br>
+                    {{ product.price }}
+                    <a href="{{ path('admin_product_update', {id: product.id}) }}"><button>Update</button></a>
+                    <br>
+                    <a href="{{ path('admin_product_delete', {id: product.id}) }}"><button>Delete</button></a>
+                </li>
+                <br>
+            </div>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
